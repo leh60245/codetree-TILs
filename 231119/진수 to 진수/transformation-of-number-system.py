@@ -5,7 +5,7 @@ m = len(n)
 
 cnt = 0
 for idx, i in enumerate(n):
-    cnt += a ** (m-idx-1)
+    cnt += (a ** (m-idx-1)) * int(i)
 
 
 answer = ''
