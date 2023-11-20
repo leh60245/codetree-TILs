@@ -17,12 +17,11 @@ for _ in range(n):
         while a > 0 :
             arr[p] = arrow[b]
             a -= 1
-            p -= 1  
-            if p < 0:
+            p -= 1 if a > 0 else 0
+            if a > 0 and p < 0:
                 p += 1
-                if a > 0 :
-                    arr = [0] + arr
-    
+                arr = [0] + arr
+                
 w = 0
 b = 0
 for i in arr:
