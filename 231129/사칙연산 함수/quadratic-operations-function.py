@@ -18,4 +18,6 @@ class calcu:
             return False
 
 input_string = input()
+if not calcu(input_string).result():
+    print("False")
 print(f"{input_string} = {calcu(input_string).result()}")
