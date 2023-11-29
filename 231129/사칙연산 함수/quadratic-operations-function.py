@@ -20,4 +20,5 @@ class calcu:
 input_string = input()
 if not calcu(input_string).result():
     print("False")
-print(f"{input_string} = {calcu(input_string).result()}")
+else:
+    print(f"{input_string} = {calcu(input_string).result()}")
