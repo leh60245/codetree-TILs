@@ -9,7 +9,7 @@ class calcu:
         if self.t == "+":
             return int(a) + int(b)
         elif self.t == "-":
-            return int(a) + int(b)
+            return int(a) - int(b)
         elif self.t == "/":
             return int(int(a) / int(b))
         elif self.t == "*":
