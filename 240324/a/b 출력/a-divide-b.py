@@ -22,4 +22,9 @@ while True:
 last = len(answer.split('.')[-1])
 if last < 20:
     answer += '0' * (20-last)
+elif last > 20:
+    answer = answer.split('.')[0] + '.' + answer.split('.')[1][:20]
 print(answer)
+
+97590361445783132530
+975903614457831325301
