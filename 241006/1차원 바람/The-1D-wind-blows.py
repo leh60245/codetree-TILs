@@ -5,9 +5,11 @@ n, m, q = map(int, input().split())
 arr = []
 for _ in range(n):
     arr.append(list(map(int, input().split())))
-r, d = map(str, input().split())
-r = int(r)
-direction = ["L", "R"]  # L은 바람이 왼쪽에서 불어온다는 것
+rd = []
+for _ in range(q):
+    r, d = map(str, input().split())
+    r = int(r)
+    rd.append((r, d))
 
 
 def sol(idx, direct, end):
@@ -31,7 +33,7 @@ def sol(idx, direct, end):
             sol(idx - 1, "R", end + [idx])
         else:
             sol(idx - 1, "L", end + [idx])
-    if idx < n-1 and chk(idx, "down"):
+    if idx < n - 1 and chk(idx, "down"):
         if direct == "L":
             sol(idx + 1, "R", end + [idx])
         else:
@@ -52,7 +54,7 @@ def chk(idx, op):
     return False
 
 
-for _ in range(q):
-    sol(r - 1, d, [])
+for i in range(q):
+    sol(rd[i][0] - 1, rd[i][1], [])
 for i in range(n):
     print(*arr[i])
