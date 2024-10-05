@@ -20,10 +20,17 @@ def chk4(x, y):
 def chk5(x, y):
     return arr[x][y] + arr[x][y+1] + arr[x][y+2]
 
+def chk6(x, y):
+    return arr[x][y] + arr[x+1][y] + arr[x+2][y]
+
 answer = 0
 for i in range(n):
     for j in range(n-2):
         answer = max(answer, chk5(i, j))
+
+for i in range(n-2):
+    for j in range(n):
+        answer = max(answer, chk6(i, j))
 
 for i in range(n-1):
     for j in range(n-1):
