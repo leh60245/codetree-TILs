@@ -14,7 +14,7 @@ def in_box(x, y):
     return 0 <= x and x < n and 0 <= y and y < m
 
 def can_go(x, y):
-    return in_box(x, y) and arr[x][y] == 1
+    return in_box(x, y) and arr[x][y] == 1 and not visited[x][y]
 
 ans = 0
 def dfs(x, y):
@@ -25,7 +25,7 @@ def dfs(x, y):
         return
     for i in range(2):
         dx, dy = x + dxs[i], y + dys[i]
-        if can_go(dx, dy):
+        if can_go(dx, dy) :
             visited[dx][dy] = True
             dfs(dx, dy)
 
