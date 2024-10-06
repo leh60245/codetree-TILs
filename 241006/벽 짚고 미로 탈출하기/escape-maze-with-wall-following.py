@@ -7,9 +7,8 @@ x, y = tuple(map(int, input().split()))
 x, y = x - 1, y - 1
 arr = []
 for _ in range(n):
-    st = list(input())[:-1]
+    st = list(map(str, input()))
     arr.append(st)
-
 dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]  # 시계 방향
 idx = 0
 
