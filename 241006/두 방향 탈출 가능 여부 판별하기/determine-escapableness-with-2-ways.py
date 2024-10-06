@@ -19,7 +19,7 @@ def can_go(x, y):
 ans = 0
 def dfs(x, y):
     global ans
-    print(x, y)
+    # print(x, y)
     if x == n-1 and y == m-1:
         ans = 1
         return
