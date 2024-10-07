@@ -75,9 +75,7 @@ def size_knight(idx):
 def bfs(index_knight, direction_knight):
     # [1] 생성
     q = deque()
-    v = [
-        [0] * L for _ in range(L)
-    ]
+    v = [[0] * L for _ in range(L)]
 
     # [2] 초기 설정
     index_list, _ = size_knight(index_knight)
@@ -89,7 +87,7 @@ def bfs(index_knight, direction_knight):
     # 체력이 없는 knight는 건너 뜀
     # 만약 빈 칸, 함정이라면 상관 x.
     # 벽이라면 while문을 끝내고 밀 수 없음을 알려야 함.
-    mv_knights_list = []
+    mv_knights_list = [index_knight]
     while q:
         ci, cj = q.popleft()
         ni, nj = ci + directions[direction_knight][0], cj + directions[direction_knight][1]
@@ -111,8 +109,8 @@ def bfs(index_knight, direction_knight):
                     for nki, nkj in next_knight_index_list:
                         v[nki][nkj] = 1
                         q.append((nki, nkj))
-                        if next_knight_index not in mv_knights_list:
-                            mv_knights_list.append(next_knight_index)
+                    if next_knight_index not in mv_knights_list:
+                        mv_knights_list.append(next_knight_index)
     # for i in range(L):
     #     print(*v[i])
     # 턴이 끝나고 밀리는 knights들의 index 반환
@@ -130,9 +128,11 @@ def mv_knights(lst, direction_knight):
 
 
 # 밀린 이후 밀려진 knights의 index list를 받아 데미지를 줌
-def chk_dmg(lst):
+def chk_dmg(lst, index_knight):
     global knights
     for idx in lst:
+        if index_knight == idx:
+            continue
         r, c, h, w, k = knights[idx]
         _, dmg = size_knight(idx)
         k = max(k - dmg, 0)
@@ -148,8 +148,9 @@ for command in commands:
         continue
     result = bfs(cmd_index_knight, cmd_direction_knight)
     # print(result)
-    mv_knights(result, cmd_direction_knight)
-    chk_dmg(result)
+    if result:
+        mv_knights(result, cmd_direction_knight)
+        chk_dmg(result, cmd_index_knight)
 
     # print(knights)
 
