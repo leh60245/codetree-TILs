@@ -100,7 +100,7 @@ for turn_number in range(1, K + 1):  # 골렘마다 번호 메김
     s_i, s_j = 1, c - 1  # 첫 골렘 중앙의 좌표. 무조건 1번 인덱스 행과 c-1 인덱스 열에서 시작
     next_i, next_j, next_direction = mv_golem(s_i, s_j, d, arr)
     # 만약 숲에 들어가지 않았다면 멈추고 모든 골램들을 빼낸다.
-    if next_i < 3:
+    if next_i < 4:
         arr = [[0] * C for _ in range(R + 3)]  # 숲 초기화
         continue
     # 숲에 골램을 위치 시키고, 골램의 방향 정보를 기록한다.
