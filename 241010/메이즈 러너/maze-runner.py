@@ -104,6 +104,7 @@ def change_square(si, sj, slen):
     global arr
     global END_I, END_J
     v = [[0] * N for _ in range(N)]
+    n_arr = [[[] for _ in range(N)] for _ in range(N)]
 
     for i in range(si, si + slen):
         for j in range(sj, sj + slen):
@@ -115,21 +116,22 @@ def change_square(si, sj, slen):
             oi, oj = i - si, j - sj
             ni, nj = oj + si, slen - oi - 1 + sj
             v[ni][nj] = arr[i][j]
+            n_arr[ni][nj] = runner_arr[i][j]
 
             # runner에 대한 정보 변경
             if arr[i][j] < 0:
                 for runner_index in runner_arr[i][j]:  # 해당 자리에 위치한 러너들 index 가져옴
                     runner_info[runner_index] = ni, nj
-                runner_arr[ni][nj] = runner_arr[i][j]
-                runner_arr[i][j] = []
-            # 출구에 대한 정보 변경
-            if arr[i][j] == 10:
-                END_I, END_J = ni, nj
+
+    oi, oj = END_I- si, END_J - sj
+    ni, nj = oj + si, slen - oi - 1 + sj
+    END_I, END_J = ni, nj
 
     # 원본 미로 변경
     for i in range(si, si + slen):
         for j in range(sj, sj + slen):
             arr[i][j] = v[i][j]
+            runner_arr[i][j] = n_arr[i][j]
 
     return
 
