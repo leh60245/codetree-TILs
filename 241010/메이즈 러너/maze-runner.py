@@ -80,8 +80,8 @@ def mv_arr():
     # 박스 길이 정함
     max_square_len = N + 1  # 장소보다 1 큰 값
     for square_len in range(2, N + 1):
-        for square_r in range(N - square_len):
-            for square_c in range(N - square_len):
+        for square_r in range(N - square_len+1):
+            for square_c in range(N - square_len+1):
 
                 # 하나의 정사각형 안을 check 하기
                 is_runner = False
