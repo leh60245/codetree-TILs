@@ -211,6 +211,20 @@ def print_arr():
 for turn_number in range(M):
     # print("\nturn:", turn_number)
     # print_arr()
+    # [0] 나가기
+    not_save_cnt = 0
+    for santa_index in sorted(santa_info.keys()):
+        i, j, k, san_save, san_score = santa_info[santa_index]
+        if san_save == 0:
+            not_save_cnt += 1
+            continue
+
+    # print("turn end")
+    # print_arr()
+    if not_save_cnt == P:
+        # print("game over")
+        break
+
 
     # [1] 루돌프 이동
     RR, RC, rodolf_direction = mv_rodolf(RR, RC)
@@ -245,20 +259,15 @@ for turn_number in range(M):
 
     # 매턴 이후 탈락하지 않은 산타들에게는 1점을 추가로 부여한다.
     # P명 산타 모두 게임에서 탈락하면, 게임은 종료된다.
-    not_save_cnt = 0
     for santa_index in sorted(santa_info.keys()):
         i, j, k, san_save, san_score = santa_info[santa_index]
         if san_save == 0:
             continue
         san_score += 1
         santa_info[santa_index] = i, j, k, san_save, san_score
-    else:
-        not_save_cnt += 1
+
     # print("turn end")
     # print_arr()
-    if not_save_cnt == P:
-        # print("game over")
-        break
 
 for santa_index in sorted(santa_info.keys()):
     print(santa_info[santa_index][4], end=" ")
