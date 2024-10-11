@@ -49,8 +49,8 @@ def mv_people(people_cnt):
     return
 
 
-def bfs_people(people_index):
-    start_i, start_j = people_location[people_index]
+def bfs_people(pi):
+    start_i, start_j = people_location[pi]
     q = deque()
     v = [[0] * N for _ in range(N)]
 
@@ -61,7 +61,7 @@ def bfs_people(people_index):
     while q:
         ci, cj = q.popleft()
         # 우리가 찾던 편의점이라면 경로 첫번째 움직임을 보내줌
-        if (ci, cj) == shop_location[people_index]:
+        if (ci, cj) == shop_location[pi]:
             end_point = ci, cj
             path_list = list()
             path_list.append((ci, cj))
@@ -99,8 +99,8 @@ def start_in_becam(shop_index):
             return True
         for di, dj in [(-1, 0), (0, -1), (0, 1), (1, 0)]:
             ni, nj = ci + di, cj + dj
-            # 박스 외부거나 방문한 지역은 안됌
-            if not in_box(ni, nj) or v[ni][nj]:
+            # 박스 외부거나 방문한 지역이나 벽은 안됨
+            if not in_box(ni, nj) or v[ni][nj] or arr[ni][nj] == 2:
                 continue
             q.append((ni, nj))
             v[ni][nj] = 1
