@@ -36,20 +36,8 @@ def mv_people(people_cnt):
         if people_location[people_index] == shop_location[people_index]:
             continue
         # 이제 다음으로 움직일 위치를 정한다.
-        ci, cj = people_location[people_index]
-        shop_i, shop_j = shop_location[people_index]
-        min_len = cal_len(ci, cj, shop_i, shop_j)
-        next_i, next_j = None, None  # 확정된 다음 위치
-        for di, dj in [(-1, 0), (0, -1), (0, 1), (1, 0)]:
-            ni, nj = ci + di, cj + dj  # 다음에 올 수 있는 위치
-            # 다음 위치가 벽이라면(여기서 벽은 도착한 편의점, 출발한 베킴)
-            if not in_box(ni, nj) or arr[ni][nj] == 2:
-                continue
-            n_cal_len = cal_len(ni, nj, shop_i, shop_j)
-            if min_len > n_cal_len:
-                min_len = n_cal_len
-                next_i, next_j = ni, nj
-        people_location[people_index] = next_i, next_j
+        people_location[people_index] = bfs_people(people_index)
+
         # 다음 최단거리 위치가 정해졌으면, 편의점에 도착했는지 확인한다.
         if people_location[people_index] == shop_location[people_index]:
             arrive_shop_loc.append(shop_location[people_index])
@@ -59,6 +47,39 @@ def mv_people(people_cnt):
         arr[i][j] = 2
 
     return
+
+
+def bfs_people(people_index):
+    start_i, start_j = people_location[people_index]
+    q = deque()
+    v = [[0] * N for _ in range(N)]
+
+    q.append((start_i, start_j))
+    v[start_i][start_j] = 1
+
+    path = {(start_i, start_j): None}
+    while q:
+        ci, cj = q.popleft()
+        # 우리가 찾던 편의점이라면 경로 첫번째 움직임을 보내줌
+        if (ci, cj) == shop_location[people_index]:
+            end_point = ci, cj
+            path_list = list()
+            path_list.append((ci, cj))
+            while end_point:
+                path_list.append(path[end_point])
+                end_point = path[end_point]
+
+            return path_list[-3]
+        for di, dj in [(-1, 0), (0, -1), (0, 1), (1, 0)]:
+            ni, nj = ci + di, cj + dj
+            # 박스 외부 이거나 벽이면 안됌
+            if not in_box(ni, nj) or arr[ni][nj] == 2 or v[ni][nj]:
+                continue
+            q.append((ni, nj))
+            v[ni][nj] = 1
+            path[(ni, nj)] = ci, cj
+
+    return False
 
 
 def start_in_becam(shop_index):
@@ -78,8 +99,8 @@ def start_in_becam(shop_index):
             return True
         for di, dj in [(-1, 0), (0, -1), (0, 1), (1, 0)]:
             ni, nj = ci + di, cj + dj
-            # 박스 외부 이거나 벽이면 안됌
-            if not in_box(ni, nj):
+            # 박스 외부거나 방문한 지역은 안됌
+            if not in_box(ni, nj) or v[ni][nj]:
                 continue
             q.append((ni, nj))
             v[ni][nj] = 1
@@ -110,4 +131,4 @@ while True:
     # 다음 턴으로 가자
     turn_number += 1
 
-print(turn_number+1)
+print(turn_number + 1)
