@@ -93,17 +93,23 @@ def start_in_becam(shop_index):
     while q:
         ci, cj = q.popleft()
         # 우리가 찾던 베켐이라면 끝
-        if arr[ci][cj] == 1:
-            people_location.append((ci, cj))  # 사람이 처음 시작하는 위치 넣음
-            arr[ci][cj] = 2  # 벽으로 변경
-            return True
         for di, dj in [(-1, 0), (0, -1), (0, 1), (1, 0)]:
             ni, nj = ci + di, cj + dj
             # 박스 외부거나 방문한 지역이나 벽은 안됨
             if not in_box(ni, nj) or v[ni][nj] or arr[ni][nj] == 2:
                 continue
             q.append((ni, nj))
-            v[ni][nj] = 1
+            v[ni][nj] = v[ci][cj] + 1
+
+    min_len = N + N
+    chk_i, chk_j = None, None
+    for i in range(N):
+        for j in range(N):
+            if arr[i][j] == 1 and min_len > v[i][j]:
+                min_len = v[i][j]
+                chk_i, chk_j = i, j
+
+    people_location.append((chk_i, chk_j))
 
     return False
 
