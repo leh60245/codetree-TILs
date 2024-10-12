@@ -88,6 +88,7 @@ def find_next_player(i, j, my_idx):
         nci, ncj = player_loc[npi]
         if (i, j) == (nci, ncj):
             next_player = npi
+            break
 
     return next_player
 
@@ -101,14 +102,12 @@ def get_gun(arr, i, j, player_gun):
     if not arr[i][j]:
         return arr, player_gun
     if player_gun == 0:
-        new_gun = arr[i][j][-1]
-        arr[i][j] = arr[i][j][:-1]
+        new_gun = arr[i][j].pop()
         return arr, new_gun
     else:
         arr[i][j].append(player_gun)
         arr[i][j] = sorted(arr[i][j])
-        new_gun = arr[i][j][-1]
-        arr[i][j] = arr[i][j][:-1]
+        new_gun = arr[i][j].pop()
         return arr, new_gun
 
 
@@ -138,12 +137,21 @@ def fight(first_player_index, second_player_index):
     first_player_gun, second_player_gun = player_gun_list[first_player_index], player_gun_list[second_player_index]
 
     winner, looser = None, None
-    if (first_player_init_power + first_player_gun, first_player_init_power) > (
-            second_player_init_power + second_player_gun, second_player_init_power):
-        winner, looser = first_player_index, second_player_index
-    else:
-        winner, looser = second_player_index, first_player_index
+    # if (first_player_init_power + first_player_gun, first_player_init_power) > (
+    #         second_player_init_power + second_player_gun, second_player_init_power):
+    #     winner, looser = first_player_index, second_player_index
+    # else:
+    #     winner, looser = second_player_index, first_player_index
 
+    if first_player_init_power + first_player_gun > second_player_init_power + second_player_gun:
+        winner, looser = first_player_index, second_player_index
+    elif first_player_init_power + first_player_gun < second_player_init_power + second_player_gun:
+        winner, looser = second_player_index, first_player_index
+    else:
+        if first_player_init_power > second_player_init_power:
+            winner, looser = first_player_index, second_player_index
+        else:
+            winner, looser = second_player_index, first_player_index
     return winner, looser
 
 
@@ -164,12 +172,18 @@ def mv_looser(player_index):
     di, dj = dist_info[dist]
     ni, nj = ci + di, cj + dj
     while True:
-        if not in_box(ni, nj) or find_next_player(ni, nj, player_index):
+        if not in_box(ni, nj):
+            dist = (dist + 1) % 4
+            di, dj = dist_info[dist]
+            ni, nj = ci + di, cj + dj
+            continue
+        if find_next_player(ni, nj, player_index) is not None:
             dist = (dist + 1) % 4
             di, dj = dist_info[dist]
             ni, nj = ci + di, cj + dj
             continue
         break
+
     return ni, nj, dist
 
 
