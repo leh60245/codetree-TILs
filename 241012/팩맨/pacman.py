@@ -153,7 +153,7 @@ def mv_pickman(ci, cj, gost_arr, gost_info, dead_arr):
     for gi, gj, gd in gost_info:
         if (gi, gj) in path:
             gost_arr[gi][gj] -= 1
-            dead_arr[gi][gj] = 2
+            dead_arr[gi][gj] = 3
         else:
             new_gost_info.append((gi, gj, gd))
 
