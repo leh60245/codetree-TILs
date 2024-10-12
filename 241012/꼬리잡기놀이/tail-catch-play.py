@@ -151,16 +151,18 @@ for round in range(K):
     find_team = False
     if boll_dist == 0:
         for j in range(N):
-            if ARR[boll_line][j] == 1:
-                turn_point += 1 ** 2
-            elif ARR[boll_line][j] == 2 or ARR[boll_line][j] == 3:
-
+            if ARR[boll_line][j] == 1 or ARR[boll_line][j] == 2 or ARR[boll_line][j] == 3:
                 for team_idx in range(M):
                     k = 1
                     for pi, pj in team_list[team_idx]:
                         if (boll_line, j) == (pi, pj):
                             find_team = True
                             turn_point += k ** 2
+
+                            h_i, h_j = team_list[team_idx][0]
+                            t_i, t_j = team_list[team_idx][-1]
+                            ARR[t_i][t_j] = 1
+                            ARR[h_i][h_j] = 3
                             team_list[team_idx].reverse()
                             break
                         k += 1
@@ -170,15 +172,18 @@ for round in range(K):
                 break
     elif boll_dist == 1:    # 위로 향하는 바람 i=N-1...0, 왼쪽 열(0)번부터 N-1번 열까지
         for i in range(N-1,-1,-1):
-            if ARR[i][boll_line] == 1:
-                turn_point += 1 ** 2
-            elif ARR[i][boll_line] == 2 or ARR[i][boll_line] == 3:
+            if ARR[i][boll_line] == 1 or ARR[i][boll_line] == 2 or ARR[i][boll_line] == 3:
                 for team_idx in range(M):
                     k = 1
                     for pi, pj in team_list[team_idx]:
                         if (i, boll_line) == (pi, pj):
                             find_team = True
                             turn_point += k ** 2
+
+                            h_i, h_j = team_list[team_idx][0]
+                            t_i, t_j = team_list[team_idx][-1]
+                            ARR[t_i][t_j] = 1
+                            ARR[h_i][h_j] = 3
                             team_list[team_idx].reverse()
                             break
                         k += 1
@@ -188,15 +193,18 @@ for round in range(K):
                 break
     elif boll_dist == 2:  # <, 아래 행(N-1)부터 0번 행까지
         for j in range(N-1, -1, -1):
-            if ARR[boll_line][j] == 1:
-                turn_point += 1 ** 2
-            elif ARR[boll_line][j] == 2 or ARR[boll_line][j] == 3:
+            if ARR[boll_line][j] == 1 or ARR[boll_line][j] == 2 or ARR[boll_line][j] == 3:
                 for team_idx in range(M):
                     k = 1
                     for pi, pj in team_list[team_idx]:
                         if (boll_line, j) == (pi, pj):
                             find_team = True
                             turn_point += k ** 2
+
+                            h_i, h_j = team_list[team_idx][0]
+                            t_i, t_j = team_list[team_idx][-1]
+                            ARR[t_i][t_j] = 1
+                            ARR[h_i][h_j] = 3
                             team_list[team_idx].reverse()
                             break
                         k += 1
@@ -206,15 +214,18 @@ for round in range(K):
                 break
     else:  # 아래로 향하는 바람 0...N-1, 오른쪽 열(N-1)번부터 0번 열까지
         for i in range(N):
-            if ARR[i][boll_line] == 1:
-                turn_point += 1 ** 2
-            elif ARR[i][boll_line] == 2 or ARR[i][boll_line] == 3:
+            if ARR[i][boll_line] == 1 or ARR[i][boll_line] == 2 or ARR[i][boll_line] == 3:
                 for team_idx in range(M):
                     k = 1
                     for pi, pj in team_list[team_idx]:
                         if (i, boll_line) == (pi, pj):
                             find_team = True
                             turn_point += k ** 2
+
+                            h_i, h_j = team_list[team_idx][0]
+                            t_i, t_j = team_list[team_idx][-1]
+                            ARR[t_i][t_j] = 1
+                            ARR[h_i][h_j] = 3
                             team_list[team_idx].reverse()
                             break
                         k += 1
@@ -223,6 +234,5 @@ for round in range(K):
             if find_team:
                 break
     answer += turn_point
-    # print(turn_point)
 
 print(answer)
