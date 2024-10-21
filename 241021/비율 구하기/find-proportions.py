@@ -10,4 +10,4 @@ for _ in range(n):
     else:
         sd[cmd] = 1
 
-print("\n".join([f"{k} : {v/n*100:.4f}" for k, v in sd.items()]))
+print("\n".join([f"{k} {v/n*100:.4f}" for k, v in sd.items()]))
