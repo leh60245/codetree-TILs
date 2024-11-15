@@ -5,7 +5,7 @@ ans = abs(all_arr - s)
 arr.sort()
 for i in range(n - 1):
     for j in range(i + 1, n):
-        tmp = abs(s - abs(all_arr - arr[i] - arr[j]))
+        tmp = abs(s - (all_arr - arr[i] - arr[j]))
         if tmp < ans:
             ans = tmp
 
