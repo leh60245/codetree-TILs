@@ -1,12 +1,14 @@
 n, s = map(int, input().split())
 arr = list(map(int, input().split()))
-all_arr = sum(arr)
-ans = abs(all_arr - s)
-arr.sort()
+
+all_sum = sum(arr)
+min_diff = abs(all_sum - s)
+
 for i in range(n - 1):
     for j in range(i + 1, n):
-        tmp = abs(s - (all_arr - arr[i] - arr[j]))
-        if tmp < ans:
-            ans = tmp
+        current_sum = all_sum - arr[i] - arr[j]
 
-print(ans)
+        diff = abs(current_sum - s)
+        if diff < min_diff:
+            min_diff = diff
+print(min_diff)
