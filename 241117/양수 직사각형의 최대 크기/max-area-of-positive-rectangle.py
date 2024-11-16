@@ -14,7 +14,7 @@ for start_i in range(n):
                 is_answer = True
                 for i in range(start_i, end_i+1):
                     for j in range(start_j, end_j+1):
-                        if arr[i][j] < 0:
+                        if arr[i][j] <= 0:
                             is_answer = False
                             break
                     if is_answer is False:
